@@ -1,0 +1,51 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          set -e
+          set -x
+          python --version
+          pip install ansible yamllint ansible-lint
+          ansible --version
+          yamllint --version
+          ansible-lint --version
+      - name: Execute tests
+        run: |
+          yamllint .
+          ansible-lint
+  Molecule:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - ubuntu1804
+          - ubuntu2004
+          - debian9
+          - debian10
+        ansible:
+          - "ansible"
+        include:
+          - distro: ubuntu2004
+            ansible: "ansible==2.8.*"
+          - distro: ubuntu2004
+            ansible: "ansible==2.9.*"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          set -e
+          set -x
+          python --version
+          pip install '${{ matrix.ansible }}' molecule[docker]
+          ansible --version
+          molecule --version
+      - name: Execute Molecule
+        run: "MOLECULE_DISTRO='${{ matrix.distro }}' molecule test"
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'

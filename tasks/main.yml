@@ -1,2 +1,5 @@
 ---
 # tasks file for acng
+- include: "install.yml"
+- include: "configure.yml"
+- include: "service.yml"

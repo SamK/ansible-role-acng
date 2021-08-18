@@ -1,12 +1,23 @@
 ---
+# https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
 dependency:
   name: galaxy
 driver:
   name: docker
 platforms:
   - name: instance
-    image: docker.io/pycontribs/centos:8
+    image: geerlingguy/docker-${MOLECULE_DISTRO}-ansible
+    priviledged: true
     pre_build_image: true
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: "/sbin/init"
 provisioner:
   name: ansible
 verifier:

@@ -1,2 +1,8 @@
 ---
 # defaults file for acng
+acng_service_name: apt-cacher-ng
+acng_config_file: /etc/apt-cacher-ng/acng.conf
+acng_config: {}
+acng_config_default: {}
+acng_service_enabled: true
+acng_service_state: started

@@ -1,6 +1,16 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    acng_test: salut
+    acng_config_default:
+      RedirMax:
+        value: 5
+    acng_config:
+      Remap-epel:
+        ensure: absent
+      ExThreshold:
+        value: 3
   tasks:
     - name: "Include acng"
       include_role:

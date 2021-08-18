@@ -1,38 +1,84 @@
-Role Name
-=========
+# Ansible Role ACNG
+[![Tests](https://github.com/samk/ansible-role-acng/workflows/Test/badge.svg)](https://github.com/samk/ansible-role-acng/actions)
 
-A brief description of the role goes here.
+Install and configure [APT-Cacher NG](https://www.unix-ag.uni-kl.de/~bloch/acng/)
 
-Requirements
-------------
+## Role Variables
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+```yaml
+acng_config: {}
+```
+The configuration of `acng.conf`.
+You usually want to use this one.
+It is merged with `acng_config_default`.
+See below for the format of this variable.
 
-Role Variables
---------------
+```yaml
+acng_config_default: {}
+```
+The configuration of `acng.conf`
+You usually don't need this one.
+See below for the format of this variable.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+acng_service_name: apt-cacher-ng
+```
+The name of the service.
 
-Dependencies
-------------
+```yaml
+acng_config_file: /etc/apt-cacher-ng/acng.conf
+```
+The path to the config file.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+acng_service_state: started
+```
+The state of the service.
 
-Example Playbook
-----------------
+```yaml
+acng_service_enabled: true
+```
+Determine if the service is started on boot.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### The variables `acng_config_default` and `acng_config`
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+These variables contain the configuration settings of the `acng.conf` file.
+The type is a dictionnary.
 
-License
--------
+The two variables are merged before writing `acng.conf`.
+*This might be useful if you have to manage multiple servers with
+common settings to all servers (put them in `acng_config_default`)
+and unique settings for specific servers (put them in `acng_config`).*
 
-BSD
+The keys are the params of the `acng.conf` file.
 
-Author Information
-------------------
+The value of each key is another dictionnary which allows these keys:
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+* `value`: the value of the param; it can be ommited if the `ensure` key contains `absent`
+* `ensure`: can be `present` (default)  or `absent`
+
+If all of this is too confusing, refer to the examples below.
+
+## Example Playbooks
+
+a minimal working playbook:
+
+```yaml
+- hosts: apt_proxy
+  roles:
+     - acng
+```
+
+allow HTTPS, remove the `Debug` param:
+
+```yaml
+- hosts: apt_proxy
+  vars:
+    acng_config:
+      PassThroughPattern:
+        value: '^(.*):443$'
+      Debug:
+        ensure: absent
+  roles:
+     - acng
+```

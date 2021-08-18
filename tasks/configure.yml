@@ -1,0 +1,14 @@
+---
+- name: Set acng_conf_combined
+  set_fact:
+    acng_config_combined: "{{ acng_config | combine(acng_config_default) }}"
+
+- name: Configure acng.conf
+  lineinfile:
+    dest: /etc/apt-cacher-ng/acng.conf
+    regexp: "^{{ item.key }}: "
+    line: "{{ item.key }}: {{ item.value['value'] | default() }}"
+    state: "{{ item.value['ensure'] | default('present') }}"
+  loop: "{{ lookup('dict', acng_config_combined) }}"
+  notify:
+    - "restart {{ acng_service_name }}"

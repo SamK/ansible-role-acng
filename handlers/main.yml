@@ -1,2 +1,6 @@
 ---
 # handlers file for acng
+- name: "restart {{ acng_service_name }}"
+  service:
+    name: "{{ acng_service_name }}"
+    state: restarted
