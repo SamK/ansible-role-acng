@@ -40,6 +40,22 @@ acng_service_enabled: true
 ```
 Determine if the service is started on boot.
 
+```yaml
+acng_admin_name:
+```
+The username of the admin account
+
+```yaml
+acng_admin_password:
+```
+The password of the admin account
+
+```yaml
+acng_admin_state: present
+```
+Enable authentication against the web page.
+Ignored when `acng_admin_name` is not be set.
+
 ### The variables `acng_config_default` and `acng_config`
 
 These variables contain the configuration settings of the `acng.conf` file.
