@@ -9,3 +9,12 @@
   loop: "{{ lookup('dict', acng_config, wantlist=True) }}"
   notify:
     - "Restart {{ acng_service_name }}"
+
+- name: Configure security.conf
+  ansible.builtin.lineinfile:
+    dest: /etc/apt-cacher-ng/security.conf
+    regexp: "^AdminAuth:"
+    line: "AdminAuth: {{ acng_admin_name }}:{{ acng_admin_password }}"
+    state: "{{ (acng_admin_state == 'present' and acng_admin_name is defined) | ternary('present', 'absent') }}"
+  notify:
+    - "Restart {{ acng_service_name }}"

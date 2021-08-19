@@ -1,0 +1,20 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+  - name: Gather package facts
+    ansible.builtin.package_facts:
+      manager: auto
+
+  - name: Ensure auth is required
+    ansible.builtin.uri:
+      url: 'http://localhost:3142/acng-report.html?'
+      status_code: 401
+
+  - name: Try to login
+    ansible.builtin.uri:
+      url: 'http://localhost:3142/acng-report.html?'
+      status_code: [200]
+      user: test_user
+      password: test_pass

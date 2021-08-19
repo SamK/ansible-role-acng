@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    acng_admin_name: test_user
+    acng_admin_password: test_pass
+  tasks:
+    - name: "Include role ansible-role-acng"
+      ansible.builtin.include_role:
+        name: "ansible-role-acng"

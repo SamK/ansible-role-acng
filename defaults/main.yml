@@ -6,3 +6,6 @@ acng_config: {}
 acng_config_default: {}
 acng_service_enabled: true
 acng_service_state: started
+acng_admin_name:
+acng_admin_password:
+acng_admin_state: present
