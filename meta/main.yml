@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: acng
+  namespace: samk
   author: Samuel Krieg
   description: Install and configure APT-cacher NG
   license: GPL-3.0-or-later
