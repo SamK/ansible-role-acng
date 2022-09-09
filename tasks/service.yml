@@ -1,6 +1,6 @@
 ---
 - name: Enable apt-cacher-ng
-  service:
+  ansible.builtin.service:
     name: "{{ acng_service_name }}"
     enabled: "{{ acng_service_enabled }}"
     state: "{{ acng_service_state }}"

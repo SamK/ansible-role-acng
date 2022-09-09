@@ -1,10 +1,10 @@
 ---
 - name: Set acng_conf_combined
-  set_fact:
+  ansible.builtin.set_fact:
     acng_config_combined: "{{ acng_config | combine(acng_config_default) }}"
 
 - name: Configure acng.conf
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/apt-cacher-ng/acng.conf
     regexp: "^{{ item.key }}: "
     line: "{{ item.key }}: {{ item.value['value'] | default() }}"

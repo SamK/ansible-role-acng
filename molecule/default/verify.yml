@@ -6,22 +6,22 @@
   gather_facts: true
   tasks:
   - name: Gather package facts
-    package_facts:
+    ansible.builtin.package_facts:
       manager: auto
 
   - name: Verify Packages
-    assert:
+    ansible.builtin.assert:
       that: "'{{ item }}' in ansible_facts.packages"
     with_items:
       - apt-cacher-ng
 
   - name: Read acng config file
-    shell: 'grep -v "^#\|^$" /etc/apt-cacher-ng/acng.conf'
+    ansible.builtin.shell: 'grep -v "^#\|^$" /etc/apt-cacher-ng/acng.conf'
     register: acng_config_contents
     changed_when: false
 
   - name: Assert configuration settings in acng.conf
-    assert:
+    ansible.builtin.assert:
       that:
         - "acng_config_contents.stdout | regex_search('^CacheDir: ', multiline=True)"           # regex works for values that exist
         - "not acng_config_contents.stdout | regex_search('^SomethingFancy:', multiline=True)"  # regex works for values that do not exist
@@ -33,13 +33,13 @@
       quiet: true
 
   - name: Set proxy in apt config
-    copy:
+    ansible.builtin.copy:
       dest: /etc/apt/apt.conf.d/proxy
       content: "Acquire::http::Proxy \"http://{{ ansible_facts['hostname'] }}:3142\";\n"
       mode: '0644'
 
   - name: Install a package
-    apt:
+    ansible.builtin.apt:
       name: bc
       state: present
       update_cache: true
