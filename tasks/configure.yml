@@ -11,4 +11,4 @@
     state: "{{ item.value['ensure'] | default('present') }}"
   loop: "{{ lookup('dict', acng_config_combined) }}"
   notify:
-    - "restart {{ acng_service_name }}"
+    - "Restart {{ acng_service_name }}"
