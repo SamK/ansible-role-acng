@@ -5,43 +5,43 @@
   hosts: all
   gather_facts: true
   tasks:
-  - name: Gather package facts
-    ansible.builtin.package_facts:
-      manager: auto
+    - name: Gather package facts
+      ansible.builtin.package_facts:
+        manager: auto
 
-  - name: Verify Packages
-    ansible.builtin.assert:
-      that: "'{{ item }}' in ansible_facts.packages"
-    with_items:
-      - apt-cacher-ng
+    - name: Verify Packages
+      ansible.builtin.assert:
+        that: "'{{ item }}' in ansible_facts.packages"
+      with_items:
+        - apt-cacher-ng
 
-  - name: Read acng config file
-    ansible.builtin.shell: 'grep -v "^#\|^$" /etc/apt-cacher-ng/acng.conf'
-    register: acng_config_contents
-    changed_when: false
+    - name: Read acng config file
+      ansible.builtin.shell: 'grep -v "^#\|^$" /etc/apt-cacher-ng/acng.conf'
+      register: acng_config_contents
+      changed_when: false
 
-  - name: Assert configuration settings in acng.conf
-    ansible.builtin.assert:
-      that:
-        - "acng_config_contents.stdout | regex_search('^CacheDir: ', multiline=True)"           # regex works for values that exist
-        - "not acng_config_contents.stdout | regex_search('^SomethingFancy:', multiline=True)"  # regex works for values that do not exist
-        - "acng_config_contents.stdout | regex_search('^ExThreshold: 3', multiline=True)"       # values in playbook must exist
-        - "acng_config_contents.stdout | regex_search('^RedirMax: 5', multiline=True)"          # values in role must exist
-        - "not acng_config_contents.stdout | regex_search('^Remap-epel:', multiline=True)"      # values with "ensure: absent" must not exist
-        # - "acng_config_contents.stdout | regex_search('Force fail')"
-      fail_msg: "The assertion failed against this config:\n----------\n{{ acng_config_contents.stdout }}\n----------"
-      quiet: true
+    - name: Assert configuration settings in acng.conf
+      ansible.builtin.assert:
+        that:
+          - "acng_config_contents.stdout | regex_search('^CacheDir: ', multiline=True)"           # regex works for values that exist
+          - "not acng_config_contents.stdout | regex_search('^SomethingFancy:', multiline=True)"  # regex works for values that do not exist
+          - "acng_config_contents.stdout | regex_search('^ExThreshold: 3', multiline=True)"       # values in playbook must exist
+          - "acng_config_contents.stdout | regex_search('^RedirMax: 5', multiline=True)"          # values in role must exist
+          - "not acng_config_contents.stdout | regex_search('^Remap-epel:', multiline=True)"      # values with "ensure: absent" must not exist
+          # - "acng_config_contents.stdout | regex_search('Force fail')"
+        fail_msg: "The assertion failed against this config:\n----------\n{{ acng_config_contents.stdout }}\n----------"
+        quiet: true
 
-  - name: Set proxy in apt config
-    ansible.builtin.copy:
-      dest: /etc/apt/apt.conf.d/proxy
-      content: "Acquire::http::Proxy \"http://{{ ansible_facts['hostname'] }}:3142\";\n"
-      mode: '0644'
+    - name: Set proxy in apt config
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/proxy
+        content: "Acquire::http::Proxy \"http://{{ ansible_facts['hostname'] }}:3142\";\n"
+        mode: '0644'
 
-  - name: Install a package
-    ansible.builtin.apt:
-      name: bc
-      state: present
-      update_cache: true
-      force_apt_get: true
-    retries: 1
+    - name: Install a package
+      ansible.builtin.apt:
+        name: bc
+        state: present
+        update_cache: true
+        force_apt_get: true
+      retries: 1
