@@ -3,7 +3,7 @@ name: Test
 on: [push, pull_request]
 jobs:
   Lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -20,7 +20,7 @@ jobs:
           yamllint .
           ansible-lint
   Molecule:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         distro:
