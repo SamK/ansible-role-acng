@@ -1,4 +1,5 @@
 ---
+# Ansible timeline: https://en.wikipedia.org/wiki/Ansible_(software)#History
 name: Test
 on: [push, pull_request]
 jobs:
@@ -12,6 +13,7 @@ jobs:
           set -x
           python --version
           pip install ansible yamllint ansible-lint
+          pip freeze
           ansible --version
           yamllint --version
           ansible-lint --version
@@ -22,6 +24,7 @@ jobs:
   Molecule:
     runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
         distro:
           - ubuntu1804
