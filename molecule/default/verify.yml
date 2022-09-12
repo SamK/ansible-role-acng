@@ -4,16 +4,33 @@
 - name: Verify
   hosts: all
   gather_facts: true
+  vars:
+    service_name: "apt-cacher-ng"
   tasks:
     - name: Gather package facts
       ansible.builtin.package_facts:
         manager: auto
+
+    - name: Gather service facts
+      ansible.builtin.service_facts:
 
     - name: Verify Packages
       ansible.builtin.assert:
         that: "'{{ item }}' in ansible_facts.packages"
       with_items:
         - apt-cacher-ng
+
+    - name: "Print service facts for service {{ service_name }}"
+      ansible.builtin.debug:
+        var: ansible_facts.services[service_name]
+
+    - name: Verify service
+      ansible.builtin.assert:
+        that:
+          - "'{{ service_name }}' in ansible_facts.services"
+          - "ansible_facts.services['{{ service_name }}']['state'] == 'running'"
+          # "status" does not seem to exist?
+          # - "{{ ansible_facts.services[item]['status'] == 'enabled' }}"
 
     - name: Read acng config file
       ansible.builtin.shell: 'grep -v "^#\|^$" /etc/apt-cacher-ng/acng.conf'
