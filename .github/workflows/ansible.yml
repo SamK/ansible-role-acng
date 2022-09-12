@@ -32,12 +32,18 @@ jobs:
           - debian9
           - debian10
         ansible:
-          - "ansible"
+          - ansible-latest
         include:
           - distro: ubuntu2004
-            ansible: "ansible==2.8.*"
+            ansible: "ansible-2.13"
           - distro: ubuntu2004
-            ansible: "ansible==2.9.*"
+            ansible: "ansible-2.12"
+          - distro: ubuntu2004
+            ansible: "ansible-2.11"
+          - distro: ubuntu2004
+            ansible: "ansible-2.10"
+          - distro: ubuntu2004
+            ansible: "ansible-2.9"
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -45,7 +51,8 @@ jobs:
           set -e
           set -x
           python --version
-          pip install '${{ matrix.ansible }}' molecule[docker]
+          pip install -r molecule/requirements/${{ matrix.ansible }}.txt
+          pip freeze
           ansible --version
           molecule --version
       - name: Execute Molecule
