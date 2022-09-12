@@ -4,3 +4,4 @@
   ansible.builtin.service:
     name: "{{ acng_service_name }}"
     state: restarted
+    use: "{{ acng_service_use | default(omit) }}"

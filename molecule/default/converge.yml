@@ -3,6 +3,7 @@
   hosts: all
   vars:
     acng_test: salut
+    acng_service_use: sysvinit
     acng_config_default:
       RedirMax:
         value: 5
@@ -12,6 +13,6 @@
       ExThreshold:
         value: 3
   tasks:
-    - name: "Include acng"
+    - name: "Include role ansible-role-acng"
       ansible.builtin.include_role:
-        name: "acng"
+        name: "ansible-role-acng"
