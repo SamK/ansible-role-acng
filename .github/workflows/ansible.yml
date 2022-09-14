@@ -1,9 +1,10 @@
 ---
+# Ansible timeline: https://en.wikipedia.org/wiki/Ansible_(software)#History
 name: Test
 on: [push, pull_request]
 jobs:
   Lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -12,6 +13,7 @@ jobs:
           set -x
           python --version
           pip install ansible yamllint ansible-lint
+          pip freeze
           ansible --version
           yamllint --version
           ansible-lint --version
@@ -20,8 +22,9 @@ jobs:
           yamllint .
           ansible-lint
   Molecule:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
         distro:
           - ubuntu1804
@@ -29,12 +32,18 @@ jobs:
           - debian9
           - debian10
         ansible:
-          - "ansible"
+          - ansible-latest
         include:
           - distro: ubuntu2004
-            ansible: "ansible==2.8.*"
+            ansible: "ansible-2.13"
           - distro: ubuntu2004
-            ansible: "ansible==2.9.*"
+            ansible: "ansible-2.12"
+          - distro: ubuntu2004
+            ansible: "ansible-2.11"
+          - distro: ubuntu2004
+            ansible: "ansible-2.10"
+          - distro: ubuntu2004
+            ansible: "ansible-2.9"
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -42,7 +51,8 @@ jobs:
           set -e
           set -x
           python --version
-          pip install '${{ matrix.ansible }}' molecule[docker]
+          pip install -r molecule/requirements/${{ matrix.ansible }}.txt
+          pip freeze
           ansible --version
           molecule --version
       - name: Execute Molecule
