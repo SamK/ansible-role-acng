@@ -2,16 +2,16 @@
 - name: Converge
   hosts: all
   vars:
-    acng_test: salut
     acng_service_use: sysvinit
-    acng_config_default:
-      RedirMax:
-        value: 5
     acng_config:
+      RedirMax: 5
       Remap-epel:
         ensure: absent
       ExThreshold:
         value: 3
+      PassThroughPattern:
+        value: '^(.*):443$'
+        ensure: absent
   tasks:
     - name: "Include role ansible-role-acng"
       ansible.builtin.include_role:

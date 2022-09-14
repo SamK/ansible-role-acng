@@ -40,14 +40,18 @@
     - name: Assert configuration settings in acng.conf
       ansible.builtin.assert:
         that:
-          - "acng_config_contents.stdout | regex_search('^CacheDir: ', multiline=True)"           # regex works for values that exist
-          - "not acng_config_contents.stdout | regex_search('^SomethingFancy:', multiline=True)"  # regex works for values that do not exist
-          - "acng_config_contents.stdout | regex_search('^ExThreshold: 3', multiline=True)"       # values in playbook must exist
-          - "acng_config_contents.stdout | regex_search('^RedirMax: 5', multiline=True)"          # values in role must exist
-          - "not acng_config_contents.stdout | regex_search('^Remap-epel:', multiline=True)"      # values with "ensure: absent" must not exist
-          # - "acng_config_contents.stdout | regex_search('Force fail')"
-        fail_msg: "The assertion failed against this config:\n----------\n{{ acng_config_contents.stdout }}\n----------"
-        quiet: true
+          # regex works for values that exist
+          - "acng_config_contents.stdout | regex_search('^CacheDir: ', multiline=True)"
+          # regex works for values that do not exist
+          - "not acng_config_contents.stdout | regex_search('^Dummy:', multiline=True)"
+          # values in dict.value['value'] must exist
+          - "acng_config_contents.stdout | regex_search('^ExThreshold: 3', multiline=True)"
+          # values in dict.value must exist
+          - "acng_config_contents.stdout | regex_search('^RedirMax: 5', multiline=True)"
+          # values with "ensure: absent" must not exist
+          - "not acng_config_contents.stdout | regex_search('^Remap-epel:', multiline=True)"
+          # values with dict.value['value'] set *and* dict.value['ensure']='absent'" must not exist
+          - "not acng_config_contents.stdout | regex_search('^PassThroughPattern:', multiline=True)"
 
     - name: Set proxy in apt config
       ansible.builtin.copy:
