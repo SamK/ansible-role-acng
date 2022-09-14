@@ -5,7 +5,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: "molecule-acng-${MOLECULE_DISTRO}"
     image: geerlingguy/docker-${MOLECULE_DISTRO}-ansible
     priviledged: true
     pre_build_image: true
