@@ -51,6 +51,7 @@ jobs:
           set -e
           set -x
           python --version
+          cat -n molecule/requirements/${{ matrix.ansible }}.txt
           pip install -r molecule/requirements/${{ matrix.ansible }}.txt
           pip freeze
           ansible --version
