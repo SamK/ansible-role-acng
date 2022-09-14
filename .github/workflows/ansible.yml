@@ -1,7 +1,11 @@
 ---
 # Ansible timeline: https://en.wikipedia.org/wiki/Ansible_(software)#History
 name: Test
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 0"
 jobs:
   Lint:
     runs-on: ubuntu-20.04
