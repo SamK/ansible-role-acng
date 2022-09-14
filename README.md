@@ -82,3 +82,47 @@ allow HTTPS, remove the `Debug` param:
   roles:
      - acng
 ```
+
+## Test
+
+The [GitHub workflow](.github/workflows/ansible.yml) is using a matrix test against multiple
+Ansible major versions and operating systems.
+The test procedure below does not allow this.
+
+1. Create and activate a virtual environment
+
+1. Define which Ansible version you want to test.
+   The list of major Ansible versions tested by GitHub worflow is located in the
+   [molecule/requirements](molecule/requirements) folder.
+   * This example installs Ansible 2.13:
+
+        ```shell
+        pip install -r molecule/requirements/ansible-2.13.txt
+        ```
+
+   * This example installs the latest version of Ansible:
+
+        ```shell
+        pip install -r molecule/requirements/ansible-latest.txt
+        ```
+
+   * You can install any version you want to test:
+
+        ```shell
+        pip install 'molecule[docker]' ansible-core==2.13.4
+        ```
+
+1. Define which OS you want to test
+
+    ```shell
+    export MOLECULE_DISTRO=ubuntu2204
+    ```
+
+   This environment variable is used by [molecule.yml](molecule/default/molecule.yml) to pull the
+   appropriate Docker image.
+
+1. Execute molecule
+
+    ```shell
+    molecule test
+    ```
