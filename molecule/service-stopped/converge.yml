@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    acng_service_use: sysvinit
+    acng_service_state: stopped
+    acng_config:
+      RedirMax: 5
+  tasks:
+    - name: "Include role ansible-role-acng"
+      ansible.builtin.include_role:
+        name: "ansible-role-acng"

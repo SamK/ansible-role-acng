@@ -6,6 +6,6 @@
     regexp: "^{{ item.key }}: "
     line: "{{ item.key }}: {{ item.value['value'] | default(item.value) }}"
     state: "{{ item.value['ensure'] | default('present') }}"
-  loop: "{{ lookup('dict', acng_config) }}"
+  loop: "{{ lookup('dict', acng_config, wantlist=True) }}"
   notify:
     - "Restart {{ acng_service_name }}"

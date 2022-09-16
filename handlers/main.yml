@@ -1,6 +1,7 @@
 ---
 # handlers file for acng
 - name: "Restart {{ acng_service_name }}"
+  when: acng_service_state == "started"
   ansible.builtin.service:
     name: "{{ acng_service_name }}"
     state: restarted

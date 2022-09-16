@@ -1,0 +1,21 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: true
+  vars:
+    service_name: "apt-cacher-ng"
+  tasks:
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: "Print service facts for service {{ service_name }}"
+      ansible.builtin.debug:
+        var: ansible_facts.services[service_name]
+
+    - name: Verify service
+      ansible.builtin.assert:
+        that:
+          - "'{{ service_name }}' in ansible_facts.services"
+          - "ansible_facts.services['{{ service_name }}']['state'] == 'stopped'"
