@@ -5,6 +5,7 @@ on:
   push:
     branches-ignore:
       - "doc/**"
+      - "noci/**"
   pull_request:
   schedule:
     - cron: "0 7 * * 0"
