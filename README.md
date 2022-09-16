@@ -134,5 +134,5 @@ The test procedure below does not allow this.
 1. Execute molecule
 
     ```shell
-    molecule test
+    molecule test --all
     ```
