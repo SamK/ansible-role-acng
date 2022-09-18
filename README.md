@@ -1,4 +1,4 @@
-# Ansible Role ACNG
+# Ansible Role: Apt-Cacher NG
 [![Tests](https://github.com/samk/ansible-role-acng/workflows/Test/badge.svg)](https://github.com/samk/ansible-role-acng/actions)
 
 Install and configure [APT-Cacher NG](https://www.unix-ag.uni-kl.de/~bloch/acng/)
