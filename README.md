@@ -47,7 +47,7 @@ acng_admin_state: present
 Enable authentication against the web page.
 Ignored when `acng_admin_name` is not be set.
 
-## `acng_config` format
+## The `acng_config` variable format
 
 The key is the config param.
 The value can be either the value of the param or a dict.
