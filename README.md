@@ -91,6 +91,13 @@ The test procedure below does not allow this.
 
 1. Create and activate a virtual environment
 
+1. Install and run the linters
+   ```shell
+   pip install yamllint ansible-lint
+   yamllint .
+   ansible-lint
+   ```
+
 1. Define which Ansible version you want to test.
    The list of major Ansible versions tested by GitHub worflow is located in the
    [molecule/requirements](molecule/requirements) folder.
