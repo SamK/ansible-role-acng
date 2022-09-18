@@ -9,6 +9,29 @@ Install and configure [APT-Cacher NG](https://www.unix-ag.uni-kl.de/~bloch/acng/
 acng_config: {}
 ```
 The configuration of `acng.conf`.
+See chapter below for specification.
+
+```yaml
+acng_service_name: apt-cacher-ng
+```
+The name of the service.
+
+```yaml
+acng_config_file: /etc/apt-cacher-ng/acng.conf
+```
+The path to the config file.
+
+```yaml
+acng_service_state: started
+```
+The state of the service.
+
+```yaml
+acng_service_enabled: true
+```
+Determine if the service is started on boot.
+
+## `acng_config` format
 
 The key is the config param.
 The value can be either the value of the param or a dict.
@@ -45,26 +68,6 @@ acng_config:
     ensure: present
     value: 3
 ```
-
-```yaml
-acng_service_name: apt-cacher-ng
-```
-The name of the service.
-
-```yaml
-acng_config_file: /etc/apt-cacher-ng/acng.conf
-```
-The path to the config file.
-
-```yaml
-acng_service_state: started
-```
-The state of the service.
-
-```yaml
-acng_service_enabled: true
-```
-Determine if the service is started on boot.
 
 ## Example Playbooks
 
