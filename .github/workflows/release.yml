@@ -1,0 +1,19 @@
+---
+# Resources:
+# https://ringanta.id/posts/publishing-ansible-role-on-ansible-galaxy-using-github-action/
+# https://github.com/robertdebock/galaxy-action
+name: Release
+on:
+  push:
+    tags:
+      '*'
+jobs:
+  Release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: galaxy
+        uses: robertdebock/galaxy-action@1.2.0
+        with:
+          galaxy_api_key: ${{ secrets.galaxy_api_key }}
