@@ -21,12 +21,13 @@ jobs:
           python --version
           pip install ansible yamllint ansible-lint
           pip freeze
-          ansible --version
-          yamllint --version
-          ansible-lint --version
-      - name: Execute tests
+      - name: Execute yamllint
         run: |
+          yamllint --version
           yamllint .
+      - name: Execute ansible-lint
+        run: |
+          ansible-lint --version
           ansible-lint
   Molecule:
     runs-on: ubuntu-20.04
