@@ -122,36 +122,36 @@ The test procedure below does not allow this.
    [molecule/requirements](molecule/requirements) folder.
    * This example installs Ansible 2.13:
 
-        ```shell
-        pip install -r molecule/requirements/ansible-2.13.txt
-        ```
+      ```shell
+      pip install -r molecule/requirements/ansible-2.13.txt
+      ```
 
    * This example installs the latest version of Ansible:
 
-        ```shell
-        pip install -r molecule/requirements/ansible-latest.txt
-        ```
+      ```shell
+      pip install -r molecule/requirements/ansible-latest.txt
+      ```
 
    * You can install any version you want to test:
 
-        ```shell
-        pip install 'molecule[docker]' ansible-core==2.13.4
-        ```
+      ```shell
+      pip install 'molecule[docker]' ansible-core==2.13.4
+       ```
 
 1. Define which OS you want to test
 
-    ```shell
-    export MOLECULE_DISTRO=ubuntu2204
-    ```
+   ```shell
+   export MOLECULE_DISTRO=ubuntu2204
+   ```
 
    This environment variable is used by [molecule.yml](molecule/default/molecule.yml) to pull the
    appropriate Docker image.
 
 1. Execute molecule
 
-    ```shell
-    molecule test --all
-    ```
+   ```shell
+   molecule test --all
+   ```
 
    Note: this command executes all scenarios on all the distros:
    ```shell
