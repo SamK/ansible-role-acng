@@ -152,3 +152,8 @@ The test procedure below does not allow this.
     ```shell
     molecule test --all
     ```
+
+   Note: this command executes all scenarios on all the distros:
+   ```shell
+   ./molecule/test-all.sh
+   ```
