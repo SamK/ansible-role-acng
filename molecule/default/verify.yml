@@ -53,6 +53,17 @@
           # values with dict.value['value'] set *and* dict.value['ensure']='absent'" must not exist
           - "not acng_config_contents.stdout | regex_search('^PassThroughPattern:', multiline=True)"
 
+    - name: Read security.conf
+      ansible.builtin.command: 'cat /etc/apt-cacher-ng/security.conf'
+      register: acng_security_contents
+      changed_when: false
+
+    - name: Assert configuration settings in security.conf
+      ansible.builtin.assert:
+        that:
+          # Ignored when `acng_admin_name` is not be set. -- doc
+          - "not acng_security_contents.stdout | regex_search('^AdminAuth:', multiline=True)"
+
     - name: Set proxy in apt config
       ansible.builtin.copy:
         dest: /etc/apt/apt.conf.d/proxy
