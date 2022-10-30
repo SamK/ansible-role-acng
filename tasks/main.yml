@@ -1,5 +1,4 @@
 ---
-# tasks file for acng
-- include: "install.yml"
-- include: "configure.yml"
-- include: "service.yml"
+- ansible.builtin.include_tasks: "install.yml"  # noqa name
+- ansible.builtin.include_tasks: "configure.yml"  # noqa name
+- ansible.builtin.include_tasks: "service.yml"  # noqa name
