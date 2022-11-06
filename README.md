@@ -138,22 +138,16 @@ The test procedure below does not allow this.
       pip install 'molecule[docker]' ansible-core==2.13.4
        ```
 
-1. Define which OS you want to test
-
-   ```shell
-   export MOLECULE_DISTRO=ubuntu2204
-   ```
-
-   This environment variable is used by [molecule.yml](molecule/default/molecule.yml) to pull the
-   appropriate Docker image.
-
 1. Execute molecule
 
    ```shell
-   molecule test --all
+   MOLECULE_DISTRO=ubuntu2004 molecule test --all
    ```
 
-   Note: this command executes all scenarios on all the distros:
+   This environment variable is used by [molecule.yml](molecule/default/molecule.yml)
+   to pull the appropriate Docker image.
+
+   Note: this command below executes all scenarios on all the distros:
    ```shell
    ./molecule/test-all.sh
    ```
