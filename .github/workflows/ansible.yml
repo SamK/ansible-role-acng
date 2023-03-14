@@ -51,10 +51,6 @@ jobs:
             ansible: "ansible-2.12"
           - distro: ubuntu2004
             ansible: "ansible-2.11"
-          - distro: ubuntu2004
-            ansible: "ansible-2.10"
-          - distro: ubuntu2004
-            ansible: "ansible-2.9"
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
