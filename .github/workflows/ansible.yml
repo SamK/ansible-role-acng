@@ -18,7 +18,10 @@ jobs:
         run: |
           set -e
           set -x
+          pip --version
           python --version
+          pip --version
+          pip install --upgrade pip
           pip install ansible yamllint ansible-lint
           pip freeze
       - name: Execute yamllint
@@ -60,6 +63,9 @@ jobs:
           set -e
           set -x
           python --version
+          pip --version
+          pip install --upgrade pip
+          pip --version
           cat -n molecule/requirements/${{ matrix.ansible }}.txt
           pip install -r molecule/requirements/${{ matrix.ansible }}.txt
           pip freeze
