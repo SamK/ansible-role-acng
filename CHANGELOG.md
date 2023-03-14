@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed support of Debian 9 "Stretch"
-- Removed support of Ansible 2.9
+- Removed support of Ansible versions 2.9 and 2.10
 
 ## [1.1.0] 2022-10-01
 ### Fixed
