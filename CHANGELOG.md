@@ -16,11 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed support of Debian 9 "Stretch"
 - Removed support of Ansible versions 2.9 and 2.10
 
-## [1.1.0] 2022-10-01
+## [1.1.0] - 2022-10-01
 ### Fixed
 - Fixed an issue where a colon was hanging around in the security.conf file
 
-## [1.0.0] 2022-09-18
+## [1.0.0] - 2022-09-18
 ### Added
 - First release!
 
