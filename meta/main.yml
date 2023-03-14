@@ -5,7 +5,7 @@ galaxy_info:
   author: Samuel Krieg
   description: Install and configure APT-cacher NG
   license: GPL-3.0-or-later
-  min_ansible_version: "2.9"
+  min_ansible_version: "2.10"
   standalone: true
   platforms:
     - name: Ubuntu
