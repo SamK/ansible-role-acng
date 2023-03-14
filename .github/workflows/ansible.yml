@@ -19,7 +19,7 @@ jobs:
           set -e
           set -x
           python --version
-          pip install ansible yamllint ansible-lint
+          pip install ansible yamllint ansible-lint==6.12.2
           pip freeze
       - name: Execute yamllint
         run: |
