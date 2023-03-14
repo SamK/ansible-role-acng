@@ -1,7 +1,7 @@
 ---
 # Ansible timeline: https://en.wikipedia.org/wiki/Ansible_(software)#History
 name: Test
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     branches-ignore:
       - "doc/**"
