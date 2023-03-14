@@ -43,6 +43,8 @@ jobs:
         ansible:
           - ansible-latest
         include:
+          - distro: ubuntu2204
+            ansible: "ansible-2.14"
           - distro: ubuntu2004
             ansible: "ansible-2.13"
           - distro: ubuntu2004
