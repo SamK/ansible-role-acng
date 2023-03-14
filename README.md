@@ -3,6 +3,10 @@
 
 Install and configure [APT-Cacher NG](https://www.unix-ag.uni-kl.de/~bloch/acng/)
 
+## Installation
+
+See https://galaxy.ansible.com/samk/acng
+
 ## Role Variables
 
 ```yaml
