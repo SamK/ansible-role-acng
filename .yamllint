@@ -4,7 +4,5 @@ extends: default
 
 rules:
   line-length:
-    max: 160
+    max: 120
     level: warning
-  truthy:
-    allowed-values: ['yes', 'no', 'on', 'true', 'false']

@@ -3,11 +3,11 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Gather package facts
-    ansible.builtin.package_facts:
-      manager: auto
+    - name: Gather package facts
+      ansible.builtin.package_facts:
+        manager: auto
 
-  - name: "Ensure security is absent"
-    ansible.builtin.uri:
-      url: 'http://localhost:3142/acng-report.html?'
-      status_code: [200]
+    - name: "Ensure security is absent"
+      ansible.builtin.uri:
+        url: 'http://localhost:3142/acng-report.html?'
+        status_code: [200]

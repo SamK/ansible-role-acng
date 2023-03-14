@@ -3,29 +3,29 @@
   hosts: all
   gather_facts: true
   tasks:
-  - name: Gather package facts
-    ansible.builtin.package_facts:
-      manager: auto
+    - name: Gather package facts
+      ansible.builtin.package_facts:
+        manager: auto
 
-  - name: Read security.conf
-    ansible.builtin.command: 'cat /etc/apt-cacher-ng/security.conf'
-    register: acng_security_contents
-    changed_when: false
+    - name: Read security.conf
+      ansible.builtin.command: 'cat /etc/apt-cacher-ng/security.conf'
+      register: acng_security_contents
+      changed_when: false
 
-  - name: Assert configuration settings in security.conf
-    ansible.builtin.assert:
-      that:
-        # Ignored when `acng_admin_name` is not be set. -- doc
-        - "acng_security_contents.stdout | regex_search('^AdminAuth: +test_user:test_pass', multiline=True)"
+    - name: Assert configuration settings in security.conf
+      ansible.builtin.assert:
+        that:
+          # Ignored when `acng_admin_name` is not be set. -- doc
+          - "acng_security_contents.stdout | regex_search('^AdminAuth: +test_user:test_pass', multiline=True)"
 
-  - name: Ensure auth is required
-    ansible.builtin.uri:
-      url: 'http://localhost:3142/acng-report.html?'
-      status_code: 401
+    - name: Ensure auth is required
+      ansible.builtin.uri:
+        url: 'http://localhost:3142/acng-report.html?'
+        status_code: 401
 
-  - name: Try to login
-    ansible.builtin.uri:
-      url: 'http://localhost:3142/acng-report.html?'
-      status_code: [200]
-      user: test_user
-      password: test_pass
+    - name: Try to login
+      ansible.builtin.uri:
+        url: 'http://localhost:3142/acng-report.html?'
+        status_code: [200]
+        user: test_user
+        password: test_pass

@@ -3,7 +3,7 @@
 # https://ringanta.id/posts/publishing-ansible-role-on-ansible-galaxy-using-github-action/
 # https://github.com/robertdebock/galaxy-action
 name: Release
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     tags:
       '*'
